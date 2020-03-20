@@ -1,0 +1,20 @@
+{% extends 'my_site/base.html' %}
+{% block title %}{{ guia_titulo }}{% endblock %}
+{% block content %}
+<div class="page-title"><h1>{{ pagina_titulo }}</h1></div>
+<div class="menu-text"><h1>{{ menu_titulo }}</h1></div>
+{% for button in buttons %}
+<div class="menu-button">
+    {% if button.get %}
+    <a href="{% url button.url button.get %}">
+    {% else %}
+    <a href="{% url button.url %}">
+    {% endif %}
+        <button>{{ button.label }}</button>
+    </a>
+</div>
+{% endfor %}
+<div class="menu-button menu-back">
+    <a href="{% url rollback.url %}"><button>{{ rollback.label }}</button></a>
+</div>
+{% endblock %}

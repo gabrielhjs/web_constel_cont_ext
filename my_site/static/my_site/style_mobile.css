@@ -1,0 +1,21 @@
+html {font-size: 14px;}
+
+.menu-button button {
+    height: 60px;
+    font-size: 1.2rem;
+}
+.form {
+    font-size: 1.5rem;
+}
+.form input {
+    width: 90%;
+}
+
+.form-data select {
+    width: 90%;
+}
+
+.table-content {
+    max-width: 100%;
+}
+

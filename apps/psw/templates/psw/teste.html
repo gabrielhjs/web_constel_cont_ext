@@ -1,0 +1,24 @@
+{% extends 'my_site/base.html' %}
+{% block title %}Constel Login{% endblock %}
+{% block content %}
+<div class="page-title"><h1>Constel</h1></div>
+<div class="table-content">
+    <table>
+        {% for informacao in informacoes %}
+        <tr>
+            <td>{{ informacao|upper }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="table-content">
+    <table>
+        {% for dado in dados %}
+        <tr>
+            <td>{{ dado.nome }}</td>
+            <td>{{ dado.valor|upper }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

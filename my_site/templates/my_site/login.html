@@ -1,0 +1,28 @@
+{% extends 'my_site/base.html' %}
+{% block title %}Constel Login{% endblock %}
+{% block content %}
+<div class="page-title"><h1>Constel</h1></div>
+<form method="post" class="form">
+{% csrf_token %}
+{% for message in messages %}
+    <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+        {{ message }}
+    </div>
+{% endfor %}
+{% for field in form %}
+    <div>
+        <p>{{ field.label_tag }}</p>
+        {% if field.help_text %}
+            <p><small style="color: grey">{{ field.help_text }}</small></p>
+        {% endif %}
+        <p>{{ field }}</p>
+        {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endfor %}
+    <div class="menu-button button-green"><button type="submit">Logar</button></div>
+</form>
+{{ dados }}
+{% endblock %}

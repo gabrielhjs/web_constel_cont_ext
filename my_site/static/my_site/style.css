@@ -1,0 +1,169 @@
+/* RESETS
+--------------------------------------------------------------*/
+
+a {border: 0; font: inherit; vertical-align: baseline;}
+ol, ul {list-style: none; margin: 0; padding: 0;}
+p {margin: 0;}
+label {margin: 20px 0 0 0;}
+html {font-size: 20px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+button {width: 100%; height: 100%;}
+body {background: #242424; color: white;}
+
+/*---BUTTONS---*/
+
+.page-title h1 {
+    margin: 0;
+    font-size: 3rem;
+}
+
+.menu-text {
+    color: white;
+    font-size: .8rem;
+    /*border: 2px solid magenta;*/
+}
+
+.menu-button button {
+    transition: all .2s ease-in-out;
+    background: gray;
+    color: #242424;
+    max-width: 500px;
+    width: 100%;
+    height: 50px;
+    /*border: 2px solid magenta;*/
+    font-size: 1rem; 
+}
+
+.menu-button button:hover {
+    transition: all .2s ease-in-out;
+    background: rgb(50, 50, 50);
+    color: white;
+}
+
+.menu-back {
+    margin-top: 50px;
+}
+
+.button-blue button {
+    background-color: rgb(30,144,255);
+    margin-top: 30px;
+    height: 60px;
+}
+
+.button-green button {
+    background-color: rgb(0,255,127);
+    margin-top: 30px;
+    height: 60px;
+}
+
+.button-red button {
+    background-color: rgb(255,99,71);
+    margin-top: 30px;
+}
+
+.body-content {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    /*border: 2px solid white;*/
+}
+
+.header-content {
+    padding: 0;
+}
+
+.page-title {
+    color: rgb(255, 207, 8);
+    font-size: 2rem;
+    /*border: 2px solid magenta;*/
+}
+
+/* FORMS */
+
+.form {
+    color: white;
+    font-size: 1rem;
+}
+.form label {
+    display: block;
+    margin-top: 20px;
+}
+.form input, select {
+    height: 30px;
+    width: 40%;
+    font-size: 1rem;
+}
+.form small {
+    font-size: .75rem;
+    margin-top: 0;
+    color: gray;
+}
+.error {
+    color: red;
+}
+
+.form-data input {
+    height: 30px;
+    width: 15%;
+    font-size: 1rem;
+}
+
+/* TABLES */
+
+.table-content {
+    display: flex;
+}
+.table-content table {
+    display: block;
+    overflow: auto;
+    position: static;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.table-content table th {
+    background-color: #111;
+    padding: .5rem .5rem;
+    font-size: .8rem;
+}
+
+.table-content table tr {
+    white-space: nowrap;
+}
+
+.table-content table td {
+    padding: .3rem .5rem;
+    font-size: .7rem;
+}
+.table-content table tr:nth-child(even) {
+    background-color: #333333;
+}
+
+.table-content button {
+    transition: all .2s ease-in-out;
+    background: gray;
+    color: #242424;
+    width: 100%;
+    height: 100%;
+    font-size: .8rem;
+    /*border: 2px solid magenta;*/
+}
+
+.table-content button:hover {
+    transition: all .2s ease-in-out;
+    background: rgb(50, 50, 50);
+    color: white;
+}
+
+.table-content-enumerated table {
+    counter-reset: rowNumber;
+}
+
+.table-content-enumerated table tbody tr {
+    counter-increment: rowNumber;
+}
+
+.table-content-enumerated table tbody tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+}
