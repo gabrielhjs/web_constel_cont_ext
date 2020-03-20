@@ -1,7 +1,6 @@
 .git/
 .idea
 venv_cont_ext/
-chromedriver/
 
 
 # Byte-compiled / optimized / DLL files
