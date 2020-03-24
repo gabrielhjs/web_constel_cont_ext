@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import requests
 
-CONSTEL_WEB_LOGIN_URL = 'http://127.0.0.1:8001/almoxarifado/cont/api/login/'
+CONSTEL_WEB_LOGIN_URL = 'constel.herokuapp.com/almoxarifado/cont/api/login/'
 
 
 class AuthenticationBackend(ModelBackend):
