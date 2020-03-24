@@ -32,6 +32,10 @@ ALLOWED_HOSTS = ['https://app-cont-ext.herokuapp.com/', ]
 
 # Application definition
 
+AUTHENTICATION_BACKENDS = [
+   'my_site.authentication_backend.AuthenticationBackend',
+]
+
 INSTALLED_APPS = [
     'my_site',
     'apps.psw',

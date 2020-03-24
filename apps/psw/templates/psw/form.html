@@ -1,0 +1,20 @@
+<form method="get" class="form">
+    {% for field in form %}
+    <div>
+        <p>{{ field.label_tag }}</p>
+        <p>{{ field }}</p>
+        {% if field.help_text %}
+            <p><small>{{ field.help_text }}</small></p>
+        {% endif %}
+        {% for error in field.errors %}
+            <p class="error">{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <div class="menu-button button-green"><button type="submit">{{ button_submit_text }}</button></div>
+</form>
+{% if callback %}
+<div class="menu-button button-red">
+    <a href="{% url callback %}"><button>{{ callback_text }}</button></a>
+</div>
+{% endif %}
