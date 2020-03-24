@@ -1,11 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-
-from time import sleep
-from bs4 import BeautifulSoup as Bs
-import lxml  # É importante para a biblioteca do BeautifulSoap
-import re
+from django.contrib.auth.decorators import login_required
 
 from .chromedriver import DRIVER
 from .forms import FormPswContrato, FormPswLogin
@@ -16,6 +12,7 @@ U_LOGIN = "t290669"
 U_SENHA = "Winike$2020"
 
 
+@login_required
 def view_psw_login(request):
 
     if DRIVER.autenticado:
@@ -49,6 +46,7 @@ def view_psw_login(request):
     return render(request, 'psw/psw_login.html', context)
 
 
+@login_required
 def view_psw_contrato(request):
 
     if not DRIVER.autenticado:

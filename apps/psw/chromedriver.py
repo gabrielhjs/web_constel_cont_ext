@@ -11,34 +11,19 @@ PSW_URL_LOGIN = 'https://www.copel.com/pswweb/paginas/inicio.jsf'
 PSW_URL = 'https://www.copel.com/pswweb/paginas/campoatendimentoativacao.jsf'
 
 
-def start_driver():
-
-    chrome_options = webdriver.ChromeOptions()
-    # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    # chrome_options.binary_location = "/bin/chromium"
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--silent-launch")
-    # driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-    driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=chrome_options)
-
-    return driver
-
-
 class ChromeDriver(object):
 
     def __init__(self):
         _chrome_options = webdriver.ChromeOptions()
-        # self.chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        _chrome_options.binary_location = "/bin/chromium"
-        _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+        _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        # _chrome_options.binary_location = "/bin/chromium"
+        # _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
         _chrome_options.add_argument("--headless")
         _chrome_options.add_argument("--disable-dev-shm-usage")
         _chrome_options.add_argument("--no-sandbox")
         _chrome_options.add_argument("--silent-launch")
-        # self.driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
-        self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
+        self._driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
+        # self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
         self.autenticado = False
 
     def psw_login(self, request, username, password):
