@@ -22,8 +22,8 @@ class ChromeDriver(object):
         """
             Aqui são feitas as configurações iniciais para a inicialização do webdriver bem como a inicialização do
         mesmo. Nestas configurações o navegador é aberto de forma invisível no servidor.
-            - Deverão ser realizados testes futuros para verificar capacidade de o servidor executar vários navegadores de
-            forma simultânea, que é o que ocorrerá na prática.
+            - Deverão ser realizados testes futuros para verificar capacidade de o servidor executar vários navegadores
+        de forma simultânea, que é o que ocorrerá na prática.
         """
         _chrome_options = webdriver.ChromeOptions()
         _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -33,6 +33,9 @@ class ChromeDriver(object):
         _chrome_options.add_argument("--disable-dev-shm-usage")
         _chrome_options.add_argument("--no-sandbox")
         _chrome_options.add_argument("--silent-launch")
+        _chrome_options.add_argument("disable-infobars")
+        _chrome_options.add_argument("--disable-extensions")
+        _chrome_options.add_argument("--disable-gpu")
         self._driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
         # self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
         self.autenticado = False
@@ -88,8 +91,8 @@ class ChromeDriver(object):
 
     def psw_contrato(self, contrato):
         """
-            Aqui o webdriver que já deve estar com o usuário autenticado, realiza a busca do contrato informado pelo usuário
-        no sistema da Copel; E obtem de volta as informações pertinentes, são elas:
+            Aqui o webdriver que já deve estar com o usuário autenticado, realiza a busca do contrato informado pelo
+        usuário no sistema da Copel; E obtem de volta as informações pertinentes, são elas:
             - Nome do cliente;
             - Status do contrato;
             - Porta;
