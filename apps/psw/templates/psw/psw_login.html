@@ -1,8 +1,8 @@
 {% extends 'my_site/base.html' %}
-{% block title %}Constel Login{% endblock %}
+{% block title %}Cont2WE{% endblock %}
 {% block content %}
-<div class="page-title"><h1>Constel</h1></div>
-<form method="post" class="form">
+<div class="page-title"><h1>Psw</h1></div>
+<form method="post" class="form" id="form_login_psw">
 {% csrf_token %}
 {% if messages %}
 <ul class="messages">
@@ -25,5 +25,9 @@
 {% endfor %}
     <div class="menu-button button-green"><button type="submit">Logar</button></div>
 </form>
-{{ dados }}
+{% if callback %}
+<div class="menu-button button-red">
+    <a href="{% url callback %}"><button>{{ callback_text }}</button></a>
+</div>
+{% endif %}
 {% endblock %}

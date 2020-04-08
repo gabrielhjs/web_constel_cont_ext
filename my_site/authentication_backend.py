@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import requests
 
+from .models import UserToken
+
 CONSTEL_WEB_LOGIN_URL = 'https://constel.herokuapp.com/almoxarifado/cont/api/login/'
 
 
@@ -34,6 +36,10 @@ class AuthenticationBackend(ModelBackend):
                     password=password,
                 )
                 user.save()
+
+            user_token, created = UserToken.objects.get_or_create(user=user)
+            user_token.token = response.json()['token']
+            user_token.save()
 
             return user
 

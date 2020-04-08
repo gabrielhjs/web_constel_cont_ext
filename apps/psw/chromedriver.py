@@ -12,21 +12,40 @@ PSW_URL = 'https://www.copel.com/pswweb/paginas/campoatendimentoativacao.jsf'
 
 
 class ChromeDriver(object):
+    """
+        Este obejeto é responsável por iniciar um browser virtual e accessar o site do PSW da Copel para realizar a
+    checagem da ativação do cliente, bem como a ONT em utilização em tempo real. Isso é feito utilizando-se o webdriver
+    da biblioteca Selenium, juntamente com um binário do Google Chrome.
+    """
 
     def __init__(self):
+        """
+            Aqui são feitas as configurações iniciais para a inicialização do webdriver bem como a inicialização do
+        mesmo. Nestas configurações o navegador é aberto de forma invisível no servidor.
+            - Deverão ser realizados testes futuros para verificar capacidade de o servidor executar vários navegadores de
+            forma simultânea, que é o que ocorrerá na prática.
+        """
         _chrome_options = webdriver.ChromeOptions()
-        _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        # _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         # _chrome_options.binary_location = "/bin/chromium"
-        # _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+        _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
         _chrome_options.add_argument("--headless")
         _chrome_options.add_argument("--disable-dev-shm-usage")
         _chrome_options.add_argument("--no-sandbox")
         _chrome_options.add_argument("--silent-launch")
-        self._driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
-        # self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
+        # self._driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
+        self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
         self.autenticado = False
 
     def psw_login(self, request, username, password):
+        """
+            Aqui o webdriver já iniciado acessa a URL do site do PSW e envia as informações de login e senha do usuário
+        para então realizar a autenticação no sistema.
+        :param request: objeto com as informações de requisição do sistema
+        :param username: string com o nome de usuário que é fornecido pelo usuário no formuário de login do PSW
+        :param password: string com o nome de usuário que é fornecido pelo usuário no formuário de login do PSW
+        :return: True para usuário autenticado com sucesso, e False para falha na autenticação
+        """
         self._driver.get(PSW_URL)
         self._driver.implicitly_wait(1)
 
@@ -68,6 +87,24 @@ class ChromeDriver(object):
                 return False
 
     def psw_contrato(self, contrato):
+        """
+            Aqui o webdriver que já deve estar com o usuário autenticado, realiza a busca do contrato informado pelo usuário
+        no sistema da Copel; E obtem de volta as informações pertinentes, são elas:
+            - Nome do cliente;
+            - Status do contrato;
+            - Porta;
+            - Estado do Link;
+            - Nível ONT [dB];
+            - Nível OLT [dB];
+            - Nível OLT TX:;
+            - Número Serial;
+            - Modelo ONT; dentre outras.
+            A principal informação requisitada é o núemro de serial e o modelo da ONT, pois com esses é realizada a
+        a baixa do equipamento da carga do técnico que realizou a instalação, no sistema principal (Constel.tk).
+        Porém todas as informações são enviadas para o sistema principal e armazenadas no banco de dados.
+        :param contrato: string contendo o contrato informado pelo usuário no formulário de busca de contrato
+        :return: returna um dicionário com as informações pertinentes ao contrato informado
+        """
 
         if not self.autenticado:
 
@@ -76,8 +113,21 @@ class ChromeDriver(object):
         self._driver.get(PSW_URL)
         self._driver.implicitly_wait(2)
 
-        self._driver.find_element_by_name('form:contrato').send_keys(contrato)
-        self._driver.find_element_by_name('form:j_idt115').click()
+        try:
+            self._driver.find_element_by_name('form:contrato').send_keys(contrato)
+            self._driver.find_element_by_name('form:j_idt115').click()
+
+        except NoSuchElementException:
+
+            try:
+                self._driver.find_element_by_name('j_username')
+                self.autenticado = False
+
+            except NoSuchElementException:
+                self.autenticado = False
+
+            return False
+
         self._driver.implicitly_wait(2)
 
         tempo_maximo = 20
@@ -115,23 +165,23 @@ class ChromeDriver(object):
         if dados:
             celulas = dados.findAllNext('td')
             rotulos = [
-                'Porta:',
-                'Estado do Link:',
-                'Nível ONT [dB]:',
-                'Nível OLT [dB]:',
-                'Nível OLT TX:',
-                'Número Serial:',
-                'Modelo ONT:'
+                ['porta', 'Porta:', ],
+                ['estado_link', 'Estado do Link', ],
+                ['nivel_ont', 'Nível ONT [dB]', ],
+                ['nivel_olt', 'Nível OLT [dB]', ],
+                ['nivel_olt_tx', 'Nível OLT TX', ],
+                ['serial', 'Número Serial', ],
+                ['modelo', 'Modelo ONT', ],
             ]
 
             for i in range(7):
-                dados_cliente.append({'nome': rotulos[i], 'valor': celulas[i].text})
+                dados_cliente.append({'id': rotulos[i][0], 'nome': rotulos[i][1], 'valor': celulas[i].text})
 
         if not len(info_cliente):
-            info_cliente = ['Não foi possível carregar informações']
+            info_cliente = ['Não foi possível carregar informações', ]
 
         if not len(dados_cliente):
-            dados_cliente = [{'nome': 'Não foi possível carregar dados'}]
+            dados_cliente = [{'nome': 'Não foi possível carregar dados'}, ]
 
         context = {
             'informacoes': info_cliente,

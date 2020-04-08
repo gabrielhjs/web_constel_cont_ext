@@ -1,0 +1,29 @@
+{% extends 'my_site/base.html' %}
+{% block title %}Cont2WE{% endblock %}
+{% block content %}
+<div class="page-title"><h1>Psw</h1></div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% if matericula %}
+<div class="menu-text"><h1>Ont baixada da carga de:</h1></div>
+<p style="font-size: 25px; color: green;">Matícula: {{ matricula }}</p>
+<p style="font-size: 25px; color: green;">Nome: {{ nome }}</p>
+{% endif %}
+{% if errors %}
+<div class="menu-text"><h1>Erros:</h1></div>
+    {% for error in errors %}
+        <p style="font-size: 25px; color: red;">{{ error }}</p>
+    {% endfor %}
+{% endif %}
+<div class="menu-button menu-back">
+    <a href="{% url 'psw_contrato' %}"><button>Buscar outro contrato</button></a>
+</div>
+<div class="menu-button">
+    <a href="{% url 'menu_principal' %}"><button>Voltar ao menu principal</button></a>
+</div>
+{% endblock %}

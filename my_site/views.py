@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import FormLogin
+from .objects import Button
 
 
 def view_login(request):
@@ -11,7 +12,7 @@ def view_login(request):
     next_page = request.GET.get('next', None)
 
     if request.user.is_authenticated:
-        return HttpResponseRedirect('/psw/login/')
+        return HttpResponseRedirect('/')
 
     else:
 
@@ -30,7 +31,7 @@ def view_login(request):
                     if next_page is not None:
                         return HttpResponseRedirect(next_page)
 
-                    return HttpResponseRedirect('/psw/login/')
+                    return HttpResponseRedirect('/')
 
         else:
             form = FormLogin()
@@ -48,3 +49,22 @@ def view_logout(request):
     logout(request)
 
     return HttpResponseRedirect('/login/')
+
+
+@login_required
+def view_menu_principal(request):
+
+    button_1 = Button('psw_login', 'Realizar baixa de Ont no sistema')
+    button_logout = Button('logout', 'Logout')
+
+    context = {
+        'buttons': [
+            button_1,
+        ],
+        'guia_titulo': 'Cont2WE',
+        'pagina_titulo': 'Cont2WE',
+        'menu_titulo': 'Menu principal',
+        'rollback': button_logout,
+    }
+
+    return render(request, 'my_site/menu.html', context)

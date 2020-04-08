@@ -1,0 +1,46 @@
+{% extends 'my_site/base.html' %}
+{% block title %}Cont2WE{% endblock %}
+{% block content %}
+<div class="page-title"><h1>Psw</h1></div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% include 'psw/form.html' %}
+{% if informacoes %}
+<div class="menu-text"><h1>Informações:</h1></div>
+<div class="table-content">
+    <table>
+        {% for informacao in informacoes %}
+        <tr>
+            <td>{{ informacao|upper }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="menu-text"><h1>Dados:</h1></div>
+<div class="table-content">
+    <table>
+        {% for dado in dados %}
+        <tr>
+            <td>{{ dado.nome }}</td>
+            <td>{{ dado.valor|upper }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% for button in buttons %}
+<div class="menu-button button-green">
+    <a href="{% url button.url %}">
+        <button>{{ button.label }}</button>
+    </a>
+</div>
+{% endfor %}
+{% endif %}
+<div class="menu-button menu-back">
+    <a href="{% url 'menu_principal' %}"><button>Voltar ao menu principal</button></a>
+</div>
+{% endblock %}

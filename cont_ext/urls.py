@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('my_site.urls')),
     path('', include('apps.psw.urls')),
     path('admin/', admin.site.urls),
+    path('doc/', include('django.contrib.admindocs.urls'))
 ]

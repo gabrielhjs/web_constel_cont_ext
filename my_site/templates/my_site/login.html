@@ -2,7 +2,7 @@
 {% block title %}Constel Login{% endblock %}
 {% block content %}
 <div class="page-title"><h1>Constel</h1></div>
-<form method="post" class="form">
+<form method="post" class="form" id="form_login_constel">
 {% csrf_token %}
 {% for message in messages %}
     <div class="alert alert-success">

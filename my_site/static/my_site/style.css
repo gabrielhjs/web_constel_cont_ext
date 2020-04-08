@@ -111,6 +111,7 @@ body {background: #242424; color: white;}
 
 .table-content {
     display: flex;
+    text-align: left;
 }
 .table-content table {
     display: block;
