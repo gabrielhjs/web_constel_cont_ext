@@ -27,7 +27,7 @@ class ChromeDriver(object):
         """
         _chrome_options = webdriver.ChromeOptions()
         _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        _chrome_options.binary_location = "/bin/chromium"
+        # _chrome_options.binary_location = "/bin/chromium"
         # _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
         _chrome_options.add_argument("--headless")
         _chrome_options.add_argument("--disable-dev-shm-usage")
