@@ -9,10 +9,12 @@
     {% endfor %}
 </ul>
 {% endif %}
-{% if matericula %}
+{% if data %}
 <div class="menu-text"><h1>Ont baixada da carga de:</h1></div>
-<p style="font-size: 25px; color: green;">Matícula: {{ matricula }}</p>
-<p style="font-size: 25px; color: green;">Nome: {{ nome }}</p>
+{% for item in data %}
+<p style="font-size: 25px; color: green;">Matícula: {{ item.matricula }}</p>
+<p style="font-size: 25px; color: green;">Nome: {{ item.nome }}</p>
+{% endfor %}
 {% endif %}
 {% if errors %}
 <div class="menu-text"><h1>Erros:</h1></div>

@@ -3,7 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 from time import sleep
 from bs4 import BeautifulSoup as Bs
 from django.contrib import messages
-import lxml  # É importante para a biblioteca do BeautifulSoap
+import lxml  # É importante para a biblio   eca do BeautifulSoap
 import re
 import os
 
@@ -26,9 +26,9 @@ class ChromeDriver(object):
         de forma simultânea, que é o que ocorrerá na prática.
         """
         _chrome_options = webdriver.ChromeOptions()
-        _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        # _chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         # _chrome_options.binary_location = "/bin/chromium"
-        # _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+        _chrome_options.binary_location = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
         _chrome_options.add_argument("--headless")
         _chrome_options.add_argument("--disable-dev-shm-usage")
         _chrome_options.add_argument("--no-sandbox")
@@ -36,8 +36,8 @@ class ChromeDriver(object):
         _chrome_options.add_argument("disable-infobars")
         _chrome_options.add_argument("--disable-extensions")
         _chrome_options.add_argument("--disable-gpu")
-        self._driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
-        # self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
+        # self._driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=_chrome_options)
+        self._driver = webdriver.Chrome(executable_path="chromedriver/chromedriver", options=_chrome_options)
         self.autenticado = False
 
     def psw_login(self, request, username, password):

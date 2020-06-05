@@ -5,7 +5,7 @@ import requests
 
 from .models import UserToken
 
-CONSTEL_WEB_LOGIN_URL = 'https://constel.herokuapp.com/almoxarifado/cont/api/login/'
+CONSTEL_WEB_LOGIN_URL = 'http://127.0.0.1:8000/almoxarifado/cont/api/login/'
 
 
 class AuthenticationBackend(ModelBackend):

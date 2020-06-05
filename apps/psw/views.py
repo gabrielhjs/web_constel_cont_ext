@@ -11,7 +11,7 @@ from my_site.objects import Button
 
 
 PSW_URL = 'https://www.copel.com/pswweb/paginas/campoatendimentoativacao.jsf'
-CONSTEL_WEB_ONT_BAIXA = 'https://constel.herokuapp.com/almoxarifado/cont/api/ont/baixa/'
+CONSTEL_WEB_ONT_BAIXA = 'http://127.0.0.1:8000/almoxarifado/cont/api/ont/baixa/'
 
 
 @login_required
@@ -96,7 +96,7 @@ def view_psw_contrato(request):
 
                 context.update({'buttons': [button, ]})
 
-            print(response['dados'])
+            # print(response['dados'])
 
     return render(request, 'psw/contrato_busca.html', context)
 
@@ -108,9 +108,8 @@ def view_psw_contrato_baixa(request):
     if dados is None:
         return HttpResponseRedirect('/psw/contrato/')
 
-    headers = {
-        "Authorization": 'Token ' + request.user.token.token,
-    }
+    headers = {"Authorization": 'Token ' + request.user.token.token, }
+    
     json = {}
     context = {}
 
@@ -120,11 +119,18 @@ def view_psw_contrato_baixa(request):
 
     json['token'] = request.user.token.token
 
+    teste = {
+        'data': [
+            json,
+            json,
+        ]
+    }
+
     try:
         response_url = requests.post(
             CONSTEL_WEB_ONT_BAIXA,
-            json=json,
-            headers=headers
+            json=teste['data'],
+            headers=headers,
         )
 
     except ConnectionError:
@@ -132,23 +138,32 @@ def view_psw_contrato_baixa(request):
 
         return HttpResponseRedirect('/psw/contrato/baixa/')
 
-    if response_url.status_code == 201:
-        matricula = response_url.json()['username']
-        nome = response_url.json()['first_name'] + " " + response_url.json()['last_name']
+    print(response_url)
 
-        context.update({
-            'matricula': matricula,
-            'nome': nome,
-        })
+    if response_url.status_code == 201:
+        context.update({'data': []})
+        
+        print(response_url.text)
+        for item in response_url.json():
+            print(item)
+            matricula = item['user_to']
+            nome = item['user_to_first_name'] + " " + item['user_to_last_name']
+
+            context['data'].append({
+                'matricula': matricula,
+                'nome': nome,
+            })
 
         # print(INIT_SPACE + "Ont baixada de:")
         # print(INIT_SPACE + "Matrícula: " + user)
         # print(INIT_SPACE + "Nome: " + user_name)
 
     elif response_url.status_code == 400:
-        errors = response_url.json()['non_field_errors']
+        context['errors'] = []
+        for item in response_url.json():
+            errors = item['non_field_errors']
 
-        context.update({'errors': errors})
+            context['errors'].append({'errors': errors})
 
         # for error in errors:
         #     print(INIT_SPACE + "ERRO: " + error)
@@ -158,7 +173,7 @@ def view_psw_contrato_baixa(request):
         # print(INIT_SPACE + "Ocorreu um erro desconhecido, entre em contato com o administrador")
         # print(response_url.json())
 
-    print(response_url.json())
+    print(response_url.text)
     print(context)
 
     return render(request, 'psw/contrato_baixa.html', context)
